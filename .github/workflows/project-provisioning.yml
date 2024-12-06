@@ -26,7 +26,7 @@ jobs:
       - name: Output Issue JSON
         id: output_issue_data
         run: |
-          echo '${{ steps.extract_data.outputs.json }})' > local.json
+          echo '${{ steps.extract_data.outputs.json }}' | jq '.' > local.json
           project_name=$(jq -r '."project-name"' local.json)
           echo "project-name=$project_name" >> $GITHUB_OUTPUT
           cost_center=$(jq -r '."cost-center"' local.json)
