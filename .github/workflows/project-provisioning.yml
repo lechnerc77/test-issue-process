@@ -37,11 +37,25 @@ jobs:
       - name: Output Issue JSON
         id: output_issue_data
         run: |
-          echo ${{ steps.extract_data.outputs.json }}
+          echo ${{ steps.extract_data.outputs.json }} > local.json
+          project_name=$(jq -r '."project-name"' local.json)
+          echo "project-name=$project_name" >> $GITHUB_OUTPUT
+          cost_center=$(jq -r '."cost-center"' local.json)
+          echo "cost-center=$cost_center" >> $GITHUB_OUTPUT
+          space_admin=$(jq -r '."space-admin"' local.json)
+          echo "space-admin=$space_admin" >> $GITHUB_OUTPUT
+          subaccount_region=$(jq -r '."subaccount-region"[0]' local.json)
+          echo "subaccount-region=$subaccount_region" >> $GITHUB_OUTPUT
+          subaccount_stage=$(jq -r '."subaccount-stage"[0]' local.json)
+          echo "subaccount-stage=$subaccount_stage" >> $GITHUB_OUTPUT
 
-      - name: Add comment to issue
+          - name: Add comment to issue
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: | 
-            This is a test
+          body: |
+            Name: ${{ steps.output_issue_data.outputs.project-name }}
+            Cost Center: ${{ steps.output_issue_data.outputs.cost-center }}
+            Space Admin: ${{ steps.output_issue_data.outputs.space-admin }}
+            Region: ${{ steps.output_issue_data.outputs.subaccount-region }}
+            Stage: ${{ steps.output_issue_data.outputs.subaccount-stage }}
