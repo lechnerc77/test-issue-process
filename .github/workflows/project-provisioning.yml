@@ -9,7 +9,7 @@ permissions:
 env:
   PATH_TO_TFSCRIPT_BTP: 'infra/BTP'
   PATH_TO_TFSCRIPT_CF: 'infra/CloudFoundry'
-  GLOABLACCOUNT: 'eaf24ea9trial-ga'
+  GLOBALACCOUNT: 'eaf24ea9trial-ga'
 
 jobs:
   create_subaccount:
