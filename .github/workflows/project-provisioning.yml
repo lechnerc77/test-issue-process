@@ -70,6 +70,7 @@ jobs:
         run: |
             export BTP_USERNAME=${{ secrets.BTP_USERNAME }}
             export BTP_PASSWORD=${{ secrets.BTP_PASSWORD }}
+            export TF_VAR_globalaccount=${{ secrets.GLOBALACCOUNT }}
             export TF_VAR_project_name=${{ steps.output_issue_data.outputs.project-name }}
             export TF_VAR_subaccount_region=${{ steps.output_issue_data.outputs.subaccount-region }}
             export TF_VAR_subaccount_stage=${{ steps.output_issue_data.outputs.subaccount-stage }}

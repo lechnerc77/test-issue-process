@@ -1,7 +1,6 @@
 variable "globalaccount" {
   description = "Subdomain of the global account"
   type        = string
-  default     = "eaf24ea9trial"
 }
 
 variable "project_name" {
