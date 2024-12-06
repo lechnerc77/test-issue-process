@@ -1,0 +1,43 @@
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  create_subaccount:
+    name: Create Subaccount for Project
+    if: ${{ !github.event.issue.pull_request }} && contains(github.event.issue.body, 'Project Name')
+    runs-on: ubuntu-latest
+    steps:
+      - name: trigger approval
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: lechnerc77, rui1610
+          minimum-approvals: 1
+          issue-title: "Approval of new project subaccount"
+          issue-body: "Please approve or deny the request."
+          exclude-workflow-initiator-as-approver: false
+          additional-approved-words: ''
+          additional-denied-words: ''
+
+      - name: Extract Issue Data
+        id: extract_data
+        uses: issue-ops/parser@v4
+        with:
+          body: ${{ github.event.issue.body }}
+          issue-form-template: account_request.yml
+
+      - name: Output Issue JSON
+        id: output_issue_data
+        run: |
+          echo ${{ steps.extract_data.outputs.json }}
+
+      - name: Add comment to issue
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: github.event.issue.number
+          body: | 
+            This is a test
