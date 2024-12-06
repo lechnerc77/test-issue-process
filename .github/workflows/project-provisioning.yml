@@ -42,6 +42,6 @@ jobs:
       - name: Add comment to issue
         uses: peter-evans/create-or-update-comment@v4
         with:
-          issue-number: github.event.issue.number
+          issue-number: ${{ github.event.issue.number }}
           body: | 
             This is a test
