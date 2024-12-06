@@ -1,6 +1,6 @@
 resource "random_uuid" "uuid" {}
 
-data "btp_globalaccount" "this" {}
+//data "btp_globalaccount" "this" {}
 
 locals {
   subaccount_name      = "${var.subaccount_stage} ${var.project_name}"
