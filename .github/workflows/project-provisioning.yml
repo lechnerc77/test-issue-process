@@ -24,6 +24,9 @@ jobs:
           additional-approved-words: ''
           additional-denied-words: ''
 
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Extract Issue Data
         id: extract_data
         uses: issue-ops/parser@v4
