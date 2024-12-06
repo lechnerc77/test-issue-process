@@ -37,16 +37,15 @@ jobs:
       - name: Output Issue JSON
         id: output_issue_data
         run: |
-          echo ${{ steps.extract_data.outputs.json }} > local.json
-          project_name=$(jq -r '."project-name"' local.json)
+          project_name=$(jq -r '."project-name"' ${{ steps.extract_data.outputs.json }})
           echo "project-name=$project_name" >> $GITHUB_OUTPUT
-          cost_center=$(jq -r '."cost-center"' local.json)
+          cost_center=$(jq -r '."cost-center"' ${{ steps.extract_data.outputs.json }})
           echo "cost-center=$cost_center" >> $GITHUB_OUTPUT
-          space_admin=$(jq -r '."space-admin"' local.json)
+          space_admin=$(jq -r '."space-admin"' ${{ steps.extract_data.outputs.json }})
           echo "space-admin=$space_admin" >> $GITHUB_OUTPUT
-          subaccount_region=$(jq -r '."subaccount-region"[0]' local.json)
+          subaccount_region=$(jq -r '."subaccount-region"[0]' ${{ steps.extract_data.outputs.json }})
           echo "subaccount-region=$subaccount_region" >> $GITHUB_OUTPUT
-          subaccount_stage=$(jq -r '."subaccount-stage"[0]' local.json)
+          subaccount_stage=$(jq -r '."subaccount-stage"[0]' ${{ steps.extract_data.outputs.json }})
           echo "subaccount-stage=$subaccount_stage" >> $GITHUB_OUTPUT
 
       - name: Add comment to issue
