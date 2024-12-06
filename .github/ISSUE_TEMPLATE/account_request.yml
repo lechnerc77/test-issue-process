@@ -39,13 +39,6 @@ body:
     validations:
       required: true
   - type: input
-    id: cost-center
-    attributes:
-      label: Cost Center
-      description: Please enter the cost center of the project.
-    validations:
-      required: true
-  - type: input
     id: space-admin
     attributes:
       label: Cloud Foundry Space Administrator
