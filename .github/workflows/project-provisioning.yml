@@ -1,3 +1,4 @@
+name: Project Provisioning
 on:
   issues:
     types: [opened]
@@ -15,7 +16,7 @@ jobs:
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
-          approvers: lechnerc77, rui1610
+          approvers: lechnerc77
           minimum-approvals: 1
           issue-title: "Approval of new project subaccount"
           issue-body: "Please approve or deny the request."
