@@ -9,6 +9,7 @@ permissions:
 env:
   PATH_TO_TFSCRIPT_BTP: 'infra/BTP'
   PATH_TO_TFSCRIPT_CF: 'infra/CloudFoundry'
+  GLOABLACCOUNT: 'eaf24ea9trial-ga'
 
 jobs:
   create_subaccount:
@@ -70,11 +71,12 @@ jobs:
         run: |
             export BTP_USERNAME=${{ secrets.BTP_USERNAME }}
             export BTP_PASSWORD=${{ secrets.BTP_PASSWORD }}
-            export TF_VAR_globalaccount=${{ secrets.GLOBALACCOUNT }}
+            export TF_VAR_globalaccount=${{ env.GLOBALACCOUNT }}
             export TF_VAR_project_name=${{ steps.output_issue_data.outputs.project-name }}
             export TF_VAR_subaccount_region=${{ steps.output_issue_data.outputs.subaccount-region }}
             export TF_VAR_subaccount_stage=${{ steps.output_issue_data.outputs.subaccount-stage }}
             export TF_VAR_project_costcenter=${{ steps.output_issue_data.outputs.cost-center }}
+            echo $TF_VAR_globalaccount
             terraform -chdir=${{ env.PATH_TO_TFSCRIPT_BTP }} apply -auto-approve -no-color
             cf-api-url=$(terraform -chdir=${{ env.PATH_TO_TFSCRIPT_BTP }} output cf_api_url) | echo "cf_api_url=$cf-api-url" >> $GITHUB_OUTPUT
             cf-org-id=$(terraform -chdir=${{ env.PATH_TO_TFSCRIPT_BTP }} output cf_org_id) | echo "cf_org_id=$cf-org-id" >> $GITHUB_OUTPUT
