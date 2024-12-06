@@ -49,7 +49,7 @@ jobs:
           subaccount_stage=$(jq -r '."subaccount-stage"[0]' local.json)
           echo "subaccount-stage=$subaccount_stage" >> $GITHUB_OUTPUT
 
-          - name: Add comment to issue
+      - name: Add comment to issue
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.issue.number }}
