@@ -1,7 +1,7 @@
 name: Project Provisioning
 on:
   issues:
-    types: [opened]
+    types: [opened, edited]
 
 permissions:
   issues: write
