@@ -12,17 +12,6 @@ jobs:
     if: ${{ !github.event.issue.pull_request }} && contains(github.event.issue.body, 'Project Name')
     runs-on: ubuntu-latest
     steps:
-      - name: trigger approval
-        uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.TOKEN }}
-          approvers: lechnerc77
-          minimum-approvals: 1
-          issue-title: "Approval of new project subaccount"
-          issue-body: "Please approve or deny the request."
-          exclude-workflow-initiator-as-approver: false
-          additional-approved-words: ''
-          additional-denied-words: ''
 
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -37,15 +26,16 @@ jobs:
       - name: Output Issue JSON
         id: output_issue_data
         run: |
-          project_name=$(jq -r '."project-name"' ${{ steps.extract_data.outputs.json }})
+          echo '${{ steps.extract_data.outputs.json }})' > local.json
+          project_name=$(jq -r '."project-name"' local.json)
           echo "project-name=$project_name" >> $GITHUB_OUTPUT
-          cost_center=$(jq -r '."cost-center"' ${{ steps.extract_data.outputs.json }})
+          cost_center=$(jq -r '."cost-center"' local.json)
           echo "cost-center=$cost_center" >> $GITHUB_OUTPUT
-          space_admin=$(jq -r '."space-admin"' ${{ steps.extract_data.outputs.json }})
+          space_admin=$(jq -r '."space-admin"' local.json)
           echo "space-admin=$space_admin" >> $GITHUB_OUTPUT
-          subaccount_region=$(jq -r '."subaccount-region"[0]' ${{ steps.extract_data.outputs.json }})
+          subaccount_region=$(jq -r '."subaccount-region"[0]' local.json)
           echo "subaccount-region=$subaccount_region" >> $GITHUB_OUTPUT
-          subaccount_stage=$(jq -r '."subaccount-stage"[0]' ${{ steps.extract_data.outputs.json }})
+          subaccount_stage=$(jq -r '."subaccount-stage"[0]' local.json)
           echo "subaccount-stage=$subaccount_stage" >> $GITHUB_OUTPUT
 
       - name: Add comment to issue
