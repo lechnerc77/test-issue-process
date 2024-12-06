@@ -14,6 +14,6 @@ output "cf_org_id" {
 }
 
 output "subaccount_url" {
-  value       = "https://account.hanatrial.ondemand.com/trial/#/globalaccount/subaccount/${btp_subaccount.project_subaccount.id}"
+  value       = "https://account.hanatrial.ondemand.com/trial/#/globalaccount/${data.btp_globalaccount.this.id}/subaccount/${btp_subaccount.project_subaccount.id}"
   description = "The SAP BTP subaccount URL"
 }
